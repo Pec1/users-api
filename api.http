@@ -9,5 +9,5 @@ Content-Type: application/json
 
 ###
 
-// b87d0a81-ae4a-4a76-a743-0f1d5cbb5a65
-GET http://localhost:3333/users/b87d0a81-ae4a-4a76-a743-0f1d5cbb5a65
+// 
+GET http://localhost:3333/all-users
