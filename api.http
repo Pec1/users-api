@@ -1,9 +1,9 @@
-POST http://localhost:3333/users
+POST users-api-production-ff6d.up.railway.app/users
 Content-Type: application/json
 
 {
-    "userName": "unkillable demon king",
-    "login": "1faker",
+    "userName": "testando",
+    "login": "teste1",
     "password": "faker123"
 }
 
