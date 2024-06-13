@@ -7,7 +7,7 @@ export async function login(app: FastifyInstance) {
     app.withTypeProvider<ZodTypeProvider>().post('/login', {
         schema: {
             body: z.object({
-                userName: z.string(),
+                login: z.string(),
                 password: z.string(),
             }),
             response: {
@@ -15,7 +15,7 @@ export async function login(app: FastifyInstance) {
                     message: z.string(),
                     user: z.object({
                         id: z.string(),
-                        userName: z.string(),
+                        login: z.string(),
                         slug: z.string(),
                         userUrl: z.string().url()
                     })
@@ -27,10 +27,16 @@ export async function login(app: FastifyInstance) {
             }
         }
     }, async (request, reply) => {
-        const { userName, password } = request.body;
+        if (request.session.user) {
+            return reply.status(400).send({
+                message: 'User is already logged in',
+            });
+        }
+        
+        const { login, password } = request.body;
 
         const user = await prisma.user.findUnique({
-            where: { userName },
+            where: { login },
         })
 
         if (!user || user.password !== password) {
@@ -38,12 +44,13 @@ export async function login(app: FastifyInstance) {
                 message: 'Invalid username or password',
             })
         }
-        
+
         request.session.user = {
-            userId: user.id,
+            id: user.id,
+            login: user.userName,
             userName: user.userName,
             slug: user.slug,
-        };
+        };  
 
         const baseURL = `${request.protocol}://${request.hostname}`;
         const userURL = new URL(`/users/${user.slug}`, baseURL);
@@ -52,7 +59,7 @@ export async function login(app: FastifyInstance) {
             message: 'Login successful',
             user: {
                 id: user.id,
-                userName: user.userName,
+                login: user.login,
                 slug: user.slug,
                 userUrl: userURL.toString()
             }

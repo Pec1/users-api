@@ -10,12 +10,12 @@ Content-Type: application/json
 ###
 
 // 
-GET users-api-production-ff6d.up.railway.app/all-users
+GET users-api-production-ff6d.up.railway.app/users/testando
 ###
 POST users-api-production-ff6d.up.railway.app/login
 Content-Type: application/json
 
 {
-    "login": "testando",
+    "userName": "testando",
     "password": "faker123"
 }

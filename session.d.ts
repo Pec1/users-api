@@ -1,11 +1,19 @@
 import 'fastify';
+import 'fastify-session';
 
 declare module 'fastify' {
     interface Session {
         user?: {
-            userId: string;
+            id: string;
+            login: string;
             userName: string;
             slug: string;
         };
     }
 }
+
+declare module 'fastify-session' {
+    interface SessionData {
+      id: string;
+    }
+  }
