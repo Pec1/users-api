@@ -38,6 +38,7 @@ export async function login(app: FastifyInstance) {
                 message: 'Invalid username or password',
             })
         }
+        
         request.session.user = {
             userId: user.id,
             userName: user.userName,
