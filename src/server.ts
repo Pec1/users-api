@@ -24,14 +24,6 @@ app.register(session, {
         maxAge: 1800
     }
 })
-  
-app.setValidatorCompiler(validatorCompiler);
-app.setSerializerCompiler(serializerCompiler);
-
-app.register(createUser)
-app.register(getUser)
-app.register(getAllUsers)
-app.register(login)
 
 // Hook para adicionar o ID da sessão ao conjunto quando uma sessão é criada
 app.addHook('onRequest', (request, reply, done) => {
@@ -57,6 +49,16 @@ app.get('/active-sessions', (request, reply) => {
     console.log('Active Sessions:', Array.from(activeSessions));
     reply.send(Array.from(activeSessions));
 }); 
+  
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
+
+app.register(createUser)
+app.register(getUser)
+app.register(getAllUsers)
+app.register(login)
+
+
 
 app.listen({
     host: '0.0.0.0',
