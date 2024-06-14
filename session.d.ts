@@ -3,6 +3,7 @@ import 'fastify-session';
 
 declare module 'fastify' {
     interface Session {
+        id: string;
         user?: {
             id: string;
             login: string;
@@ -11,9 +12,16 @@ declare module 'fastify' {
         };
     }
 }
-
+/* 
 declare module 'fastify-session' {
     interface SessionData {
-      id: string;
+        id: string;
+        user?: {
+            id: string;
+            login: string;
+            userName: string;
+            slug: string;
+        };
     }
-  }
+}
+ */

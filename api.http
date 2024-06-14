@@ -2,20 +2,24 @@ POST users-api-production-ff6d.up.railway.app/users
 Content-Type: application/json
 
 {
-    "userName": "testando",
-    "login": "teste1",
-    "password": "faker123"
+    "userName": "user teste login",
+    "login": "logins",
+    "password": "login123"
 }
 
 ###
 
 // 
-GET users-api-production-ff6d.up.railway.app/users/testando
+GET users-api-production-ff6d.up.railway.app/users/de6edd57-bb20-43bc-aca3-79ca51459a0f
 ###
 POST users-api-production-ff6d.up.railway.app/login
 Content-Type: application/json
 
 {
-    "userName": "testando",
-    "password": "faker123"
+    "login": "logins",
+    "password": "login123"
 }
+
+###
+
+GET users-api-production-ff6d.up.railway.app/active-sessions
