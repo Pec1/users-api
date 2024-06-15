@@ -10,7 +10,7 @@ Content-Type: application/json
 ###
 
 // 
-GET users-api-production-ff6d.up.railway.app/all-users
+GET users-api-production-ff6d.up.railway.app/user-teste-login
 ###
 POST users-api-production-ff6d.up.railway.app/login
 Content-Type: application/json

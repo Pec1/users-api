@@ -19,9 +19,9 @@ app.register(cookie, {
 app.register(session, {
     secret: "session-2a60b70a-d1a7-4b24-8e4b-667e6582fb2c-users-api",
     cookie: {
-        secure: false, // Em produção, defina como true se estiver usando HTTPS
+        secure: true, // Em produção, defina como true se estiver usando HTTPS
         httpOnly: true,
-        maxAge: 1800
+        expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
     }
 })
 
