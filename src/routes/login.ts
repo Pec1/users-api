@@ -52,6 +52,8 @@ export async function login(app: FastifyInstance) {
             slug: user.slug,
         };  
 
+        console.log(request.session.user);
+        
         const baseURL = `${request.protocol}://${request.hostname}`;
         const userURL = new URL(`/users/${user.slug}`, baseURL);
 
