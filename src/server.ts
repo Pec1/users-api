@@ -11,7 +11,7 @@ import { login } from "./routes/login";
 
 const app = fastify();
 /* const port = 3333; */
-const activeSessions = new Set<string>();
+const activeSessions = new Set();
 
 app.register(cookie, {
     secret: "cookie-848549c8-cd87-41bf-83d4-e79f50c1a012-users-api",
@@ -27,30 +27,26 @@ app.register(session, {
     }
 })
 
-// Hook para adicionar o ID da sessão ao conjunto quando uma sessão é criada
-app.addHook('onRequest', (request, reply, done) => {
+app.addHook('onRequest', async (request, reply) => {
     console.log('onRequest hook called');
     if (request.session.id) {
         console.log('Session ID:', request.session.id);
         activeSessions.add(request.session.id);
     }
-    done();
 });
-  
-// Hook para remover o ID da sessão do conjunto quando uma sessão é destruída
-app.addHook('onResponse', (request, reply, done) => {
+
+app.addHook('onResponse', async (request, reply) => {
     console.log('onResponse hook called');
     if (reply.statusCode === 401 || reply.statusCode === 403) {
         console.log('Removing Session ID:', request.session.id);
         activeSessions.delete(request.session.id);
     }
-    done();
 });
-// Rota para visualizar todas as sessões ativas
-app.get('/active-sessions', (request, reply) => {
+
+app.get('/active-sessions', async (request, reply) => {
     console.log('Active Sessions:', Array.from(activeSessions));
     reply.send(Array.from(activeSessions));
-}); 
+});
   
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
