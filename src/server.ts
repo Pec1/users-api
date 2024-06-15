@@ -1,3 +1,5 @@
+"use strict"
+
 import fastify from "fastify";
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 import { createUser } from "./routes/create-user";
@@ -36,14 +38,14 @@ app.addHook('onRequest', (request, reply, done) => {
 });
   
 // Hook para remover o ID da sessão do conjunto quando uma sessão é destruída
-app.addHook('onResponse', (request, reply, done) => {
+/* app.addHook('onResponse', (request, reply, done) => {
     console.log('onResponse hook called');
     if (reply.statusCode === 401 || reply.statusCode === 403) {
         console.log('Removing Session ID:', request.session.id);
         activeSessions.delete(request.session.id);
     }
     done();
-});
+}); */
 // Rota para visualizar todas as sessões ativas
 app.get('/active-sessions', (request, reply) => {
     console.log('Active Sessions:', Array.from(activeSessions));
@@ -57,8 +59,6 @@ app.register(createUser)
 app.register(getUser)
 app.register(getAllUsers)
 app.register(login)
-
-
 
 app.listen({
     host: '0.0.0.0',
