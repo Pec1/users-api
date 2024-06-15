@@ -21,7 +21,7 @@ app.register(cookie, {
 app.register(session, {
     secret: "session-2a60b70a-d1a7-4b24-8e4b-667e6582fb2c-users-api",
     cookie: {
-        secure: true, // Em produção, defina como true se estiver usando HTTPS
+        secure: false, // Em produção, defina como true se estiver usando HTTPS
         httpOnly: true,
         expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
     }
@@ -38,14 +38,14 @@ app.addHook('onRequest', (request, reply, done) => {
 });
   
 // Hook para remover o ID da sessão do conjunto quando uma sessão é destruída
-/* app.addHook('onResponse', (request, reply, done) => {
+app.addHook('onResponse', (request, reply, done) => {
     console.log('onResponse hook called');
     if (reply.statusCode === 401 || reply.statusCode === 403) {
         console.log('Removing Session ID:', request.session.id);
         activeSessions.delete(request.session.id);
     }
     done();
-}); */
+});
 // Rota para visualizar todas as sessões ativas
 app.get('/active-sessions', (request, reply) => {
     console.log('Active Sessions:', Array.from(activeSessions));
