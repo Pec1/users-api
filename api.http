@@ -10,7 +10,7 @@ Content-Type: application/json
 ###
 
 // 
-GET users-api-production-ff6d.up.railway.app/user-teste-login
+GET users-api-production-ff6d.up.railway.app/all-users
 ###
 POST users-api-production-ff6d.up.railway.app/login
 Content-Type: application/json
@@ -22,4 +22,41 @@ Content-Type: application/json
 
 ###
 
-GET users-api-production-ff6d.up.railway.app/active-sessions
+GET http://localhost:5555/active-sessions
+###
+POST http://localhost:5555/users
+Content-Type: application/json
+
+{
+   "userName": "teste login",
+    "login": "logins",
+    "password": "login123"
+}
+###
+POST http://localhost:5555/users
+Content-Type: application/json
+
+{
+   "userName": "magnoS",
+    "login": "asdasdsasdaa",
+    "password": "logiadsssdan123"
+}
+
+###
+
+POST http://localhost:5555/login
+Content-Type: application/json
+
+{
+    "login": "logins",
+    "password": "login123"
+}
+###
+
+POST http://localhost:5555/login
+Content-Type: application/json
+
+{
+    "login": "asdasdsasdaa",
+    "password": "logiadsssdan123"
+}

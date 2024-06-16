@@ -29,7 +29,7 @@ export async function login(app: FastifyInstance) {
     }, async (request, reply) => {
         if (request.session.user) {
             return reply.status(400).send({
-                message: 'User is already logged in',
+                message: 'User is already logged in', 
             });
         }
         

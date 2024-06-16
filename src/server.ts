@@ -13,11 +13,7 @@ const app = fastify();
 /* const port = 3333; */
 const activeSessions = new Set();
 
-app.register(cookie, {
-    secret: "cookie-848549c8-cd87-41bf-83d4-e79f50c1a012-users-api",
-    hook: 'onRequest',
-})
-
+app.register(cookie)
 app.register(session, {
     secret: "session-2a60b70a-d1a7-4b24-8e4b-667e6582fb2c-users-api",
     cookie: {
@@ -28,7 +24,7 @@ app.register(session, {
 })
 
 app.addHook('onRequest', async (request, reply) => {
-    console.log('onRequest hook called');
+    console.log('onRequest hook called', request.session.user);
     if (request.session.id) {
         console.log('Session ID:', request.session.id);
         activeSessions.add(request.session.id);
@@ -43,8 +39,22 @@ app.addHook('onResponse', async (request, reply) => {
     }
 });
 
+function listarCookiesDaSessao(request: any) {
+    // Verifica se o objeto cookie existe na sessão
+    if (request.session && request.session.cookie) {
+      // Retorna um objeto com todos os cookies
+      return request.session.cookie;
+    } else {
+      // Se não houver cookies, retorna um objeto vazio
+      return {};
+    }
+  }
+
 app.get('/active-sessions', async (request, reply) => {
     console.log('Active Sessions:', Array.from(activeSessions));
+    const cookies = listarCookiesDaSessao(request);
+    reply.send({ cookies });
+    
     reply.send(Array.from(activeSessions));
 });
   
