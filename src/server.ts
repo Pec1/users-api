@@ -3,6 +3,7 @@ import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod
 import { createUser } from "./routes/create-user";
 import { getUser } from "./routes/get-user";
 import { getAllUsers } from "./routes/get-all-user";
+import { login } from "./routes/login";
 
 const app = fastify();
 /* const port = 3333; */
@@ -13,8 +14,7 @@ app.setSerializerCompiler(serializerCompiler);
 app.register(createUser)
 app.register(getUser)
 app.register(getAllUsers)
-
-const jwtSecret = process.env.JWT_SECRET;
+app.register(login)
 
 app.listen({
     host: '0.0.0.0',

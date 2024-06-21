@@ -9,7 +9,6 @@ Content-Type: application/json
 ###
 POST http://localhost:5555/login HTTP/1.1
 Content-Type: application/json
-Authorization: token xxx
 
 {
     "login": "logins",
