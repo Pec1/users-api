@@ -8,20 +8,16 @@ import { getAllUsers } from "./routes/get-all-user";
 import session from '@fastify/session';
 import cookie from '@fastify/cookie';
 import { login } from "./routes/login";
+require('dotenv').config();
 
 const app = fastify();
 /* const port = 3333; */
 const activeSessions = new Set();
 
-app.register(cookie)
-app.register(session, {
-    secret: "session-2a60b70a-d1a7-4b24-8e4b-667e6582fb2c-users-api",
-    cookie: {
-        secure: false, // Em produção, defina como true se estiver usando HTTPS
-        httpOnly: true,
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-    }
-})
+app.register(cookie, {
+    secret: "2a60b70a-d1a7-4b24-8e4b-667e6582fb2c-users-api", 
+    parseOptions: {}, 
+});
   
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
