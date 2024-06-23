@@ -16,12 +16,15 @@ export async function login(app: FastifyInstance) {
             response: {
                 200: z.object({
                     message: z.string(),
-                    token: z.string(),
                     user: z.object({
                         id: z.string(),
                         userName: z.string(),
+                        login: z.string(),
+                        password: z.string(),
                         slug: z.string(),
-                    })
+                        createdAt: z.date()
+                    }),
+                    token: z.string(),
                 }),
                 400: z.object({
                     message: z.string(),
@@ -61,11 +64,7 @@ export async function login(app: FastifyInstance) {
 
         return reply.status(200).send({
             message: 'Login successful',
-            user: {
-                id: user.id,
-                userName: user.userName,
-                slug: user.slug,
-            },
+            user,
             token,
         });
     });
