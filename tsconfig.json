@@ -18,5 +18,5 @@
     "include": [
       "src/**/*.ts",
       "session.d.ts"
-    ]
+, "src/middleware/authMiddleware.ts"    ]
 }

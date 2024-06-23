@@ -54,6 +54,8 @@ export async function login(app: FastifyInstance) {
         const token = sign({ userId: user.id }, jwtSecret, {
             expiresIn: '1h',
         });
+        
+        reply.redirect('/painel');
 
         return reply.status(200).send({
             message: 'Login successful',
