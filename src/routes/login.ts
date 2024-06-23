@@ -55,7 +55,9 @@ export async function login(app: FastifyInstance) {
             expiresIn: '1h',
         });
         
-        reply.redirect('/painel');
+        console.log(user, token)
+
+        // reply.redirect('/painel');
 
         return reply.status(200).send({
             message: 'Login successful',

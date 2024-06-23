@@ -44,7 +44,7 @@ app.get('/painel', { preHandler: authenticateUser }, async (request, reply) => {
         if (!user) {
             return reply.status(404).send({ message: 'Usuário não encontrado' });
         }
-
+        console.log(user, token)
         // Retorne os dados do usuário
         return reply.status(200).send({
             message: 'Dados do usuário',
