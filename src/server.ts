@@ -28,6 +28,7 @@ app.get('/painel', { preHandler: authenticateUser }, async (request, reply) => {
     if (!jwtSecret) {
         throw new Error('JWT secret is not defined')
     }
+
     try {
         const decoded = verify(token, jwtSecret);
         if (typeof decoded === 'string') {
@@ -36,7 +37,6 @@ app.get('/painel', { preHandler: authenticateUser }, async (request, reply) => {
         
         const userId = decoded.userId;
 
-        // Busque os dados do usuário no banco de dados usando Prisma
         const user = await prisma.user.findUnique({
             where: { id: userId },
         });
@@ -45,7 +45,7 @@ app.get('/painel', { preHandler: authenticateUser }, async (request, reply) => {
             return reply.status(404).send({ message: 'Usuário não encontrado' });
         }
         console.log(user, token)
-        // Retorne os dados do usuário
+        
         return reply.status(200).send({
             message: 'Dados do usuário',
             user: {

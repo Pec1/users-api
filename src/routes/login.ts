@@ -64,7 +64,6 @@ export async function login(app: FastifyInstance) {
 
         return reply.status(200).send({
             message: 'Login successful',
-            user,
             token,
         });
     });
