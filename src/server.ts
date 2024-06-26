@@ -1,15 +1,19 @@
-import { fastify } from "fastify";
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
+import { getAllUsers } from "./routes/get-all-user";
+import { authenticateUser } from "./authentication";
 import { createUser } from "./routes/create-user";
 import { getUser } from "./routes/get-user";
-import { getAllUsers } from "./routes/get-all-user";
 import { login } from "./routes/login";
-import { authenticateUser } from "./authentication";
 import { verify } from "jsonwebtoken";
 import { prisma } from "./lib/prisma";
+import cookie from '@fastify/cookie';
+import { fastify } from "fastify";
 
 const app = fastify();
-/* const port = 3333; */
+app.register(cookie, {
+    secret: "67I81-5n308G7BMqEVREvA-aeuydfggaspeifusig-usersApi",
+    hook: 'onRequest',
+})
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);

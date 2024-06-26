@@ -16,14 +16,14 @@ export async function login(app: FastifyInstance) {
             response: {
                 200: z.object({
                     message: z.string(),
-                    user: z.object({
+/*                     user: z.object({
                         id: z.string(),
                         userName: z.string(),
                         login: z.string(),
                         password: z.string(),
                         slug: z.string(),
                         createdAt: z.date()
-                    }),
+                    }), */
                     token: z.string(),
                 }),
                 400: z.object({
@@ -60,7 +60,11 @@ export async function login(app: FastifyInstance) {
         
         console.log(user, token)
 
-        // reply.redirect('/painel');
+        reply.setCookie('sessionId', token, {
+            path: '/',
+            maxAge: 60 * 60 * 24 * 30, // 30 dias
+            httpOnly: true, // Apenas acessível pelo servidor (segurança)
+        });
 
         return reply.status(200).send({
             message: 'Login successful',
