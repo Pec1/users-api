@@ -55,15 +55,15 @@ export async function login(app: FastifyInstance) {
         }
 
         const token = sign({ userId: user.id }, jwtSecret, {
-            expiresIn: '1h',
+            expiresIn: '1d',
         });
         
         console.log(user, token)
 
         reply.setCookie('sessionId', token, {
             path: '/',
-            maxAge: 60 * 60 * 24 * 30, // 30 dias
-            httpOnly: true, // Apenas acessível pelo servidor (segurança)
+            httpOnly: true,
+            signed: true,
         });
 
         return reply.status(200).send({
