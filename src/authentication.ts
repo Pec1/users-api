@@ -1,13 +1,9 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
-import { JwtPayload, verify } from 'jsonwebtoken';
-
-interface CustomRequest extends FastifyRequest {
-    decoded: { userId: string | JwtPayload }; // Defina a estrutura do decoded conforme sua necessidade
-}
+import { verify } from 'jsonwebtoken';
 
 
 export const authenticateUser = async (
-    req: CustomRequest,
+    req: FastifyRequest,
     res: FastifyReply
 ) => {
     const jwtSecret = process.env.JWT_SECRET
@@ -15,16 +11,17 @@ export const authenticateUser = async (
         throw new Error('JWT secret is not defined')
     }
 
-    const token = req.cookies.sessionId
+    const token = req.headers.authorization?.replace('Bearer', '');
+
     if (!token) {
         res.status(401).send({ message: 'Token não fornecido' });
         return;
     }
-
+    console.log(token)
     try {
         const decoded = verify(token, jwtSecret);
-        req.decoded as JwtPayload = decoded   
+        console.log(decoded)
     } catch (err) {
-        res.status(401).send({ message: 'Token inválido' });
+        res.status(401).send({ message: 'Token invdasdassssálido' });
     }
 };
