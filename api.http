@@ -17,6 +17,7 @@ Content-Type: application/json
 ###
 GET  http://localhost:5555/painel HTTP/1.1
 Content-Type: application/json
+Cookie: sessionId=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjNjA0ZTE3MS0wYmU1LTQ3NWItYjFlOS1mZWQxZWQzYjZkZjIiLCJpYXQiOjE3MjA3MjY0OTksImV4cCI6MTcyMDgxMjg5OX0.fYrd-9RzqTE2B1mKmSBFloBh08mIBPIby0Tvr6rNVjY
 
 
 ##

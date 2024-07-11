@@ -16,18 +16,7 @@ export async function login(app: FastifyInstance) {
             response: {
                 200: z.object({
                     message: z.string(),
-/*                     user: z.object({
-                        id: z.string(),
-                        userName: z.string(),
-                        login: z.string(),
-                        password: z.string(),
-                        slug: z.string(),
-                        createdAt: z.date()
-                    }), */
                     token: z.string(),
-                }),
-                400: z.object({
-                    message: z.string(),
                 }),
                 401: z.object({
                     message: z.string(),
@@ -57,15 +46,13 @@ export async function login(app: FastifyInstance) {
         const token = sign({ userId: user.id }, jwtSecret, {
             expiresIn: '1d',
         });
-        
-        console.log(user, token)
-
         reply.setCookie('sessionId', token, {
             path: '/',
             httpOnly: true,
             signed: true,
         });
 
+        console.log(user, token)
         return reply.status(200).send({
             message: 'Login successful',
             token,
