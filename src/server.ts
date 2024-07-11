@@ -23,10 +23,31 @@ app.register(getAllUsers)
 app.register(login)
 
 app.get('/painel', { preHandler: authMiddleware }, async (request: CRequest, reply) => {
-    console.log(request)
     const userId = request.user.userId;
     console.log(userId)
-    return { message: 'You are authenticated', user: request.user }
+
+    const user = await prisma.user.findUnique({
+        select:{
+            id: true,
+            userName: true,
+            slug: true,
+        },
+        where: {
+            id: userId
+        }
+    })
+
+    if (user === null) {
+        throw new Error('Usuario não encontrado.')
+    }
+
+    return reply.send({ 
+        user: {
+            id: user.id,
+            userName: user.userName,
+            slug: user.slug,
+        } 
+    })
 })
   
 app.listen({

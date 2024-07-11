@@ -10,7 +10,7 @@ export async function authMiddleware(request: CRequest, reply: FastifyReply) {
     if (!jwtSecret) {
         throw new Error('JWT secret is not defined')
     }
-    const token = request.cookies['sessionId'];
+    const token = request.cookies['accessToken'];
     if (!token) {
         return reply.status(401).send({ message: 'Unauthorized' });
     }
