@@ -9,34 +9,55 @@ export async function createUser(app: FastifyInstance) {
         schema: {
             body: z.object({
                 userName: z.string().min(4),
+                email: z.string().email(),
                 login: z.string().min(6),
-                password: z.string().min(6),
-                email: z.string().email()
+                password: z.string().min(6)
             }),
 
             response: {
                 201: z.object({
+                    message: z.string(),
                     userId: z.string().uuid()
-                })
+                }),
+                401: z.object({
+                    message: z.string(),
+                }),
             }
         },
     }, async (request, reply) => {
-        const {
-            userName,
-            login,
-            password,
-            email
-        } = request.body
+        const { userName, login, password, email } = request.body
 
+        const normalizedLogin = login.toLowerCase()
+        const normalizedEmail = email.toLowerCase()
         const slug = generateSlug(userName)
-        const userWithSameSlug = await prisma.user.findUnique({
-            where: {
-                slug,
-            }
-        })
-        if (userWithSameSlug !== null) {
-            throw new Error('Já existe um usuario com o mesmo nome!')
+
+        const existingUserLogin = await prisma.user.findUnique({
+            where: { 
+                login: normalizedLogin,
+            },
+        });
+        if (existingUserLogin) {
+            return reply.status(401).send({ message: 'Usuário com este login já existe' });
         }
+
+        const existingUserEmail = await prisma.user.findUnique({
+            where: { 
+                email: normalizedEmail,
+            },
+        });
+        if (existingUserEmail) {
+            return reply.status(401).send({ message: 'Usuário com este email já existe' });
+        }
+        
+        const existingUserSlug = await prisma.user.findUnique({
+            where: { 
+                slug,
+            },
+        });
+        if (existingUserSlug) {
+            return reply.status(401).send({ message: 'Usuário com este nome já existe' });
+        }
+        
 
         const user = await prisma.user.create({
             data: {
@@ -48,7 +69,7 @@ export async function createUser(app: FastifyInstance) {
             }
         })
 
-        return reply.status(201).send({ userId: user.id })
+        return reply.status(201).send({ message: 'User created successful', userId: user.id })
     })
 }
 

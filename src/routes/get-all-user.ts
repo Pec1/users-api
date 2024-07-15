@@ -11,8 +11,12 @@ export async function getAllUsers(app: FastifyInstance) {
                     users: z.array(z.object({
                         id: z.string(),
                         userName: z.string(),
+                        email: z.string().email(),
+                        login: z.string(),
+                        password: z.string(),
                         slug: z.string(),
-                        userUrl: z.string().url()
+                        createdAt: z.coerce.date(),
+                        userUrl: z.string().url(),
                     }))
                 })
             }
@@ -22,6 +26,10 @@ export async function getAllUsers(app: FastifyInstance) {
             select:{
                 id: true,
                 userName: true,
+                email: true,
+                login: true,
+                password: true,
+                createdAt: true,
                 slug: true,
             }
         })
@@ -30,6 +38,10 @@ export async function getAllUsers(app: FastifyInstance) {
         const usersList = users.map(user => ({
             id: user.id,
             userName: user.userName,
+            email: user.email,
+            login: user.login,
+            password: user.password,
+            createdAt: user.createdAt,
             slug: user.slug,
             userUrl: new URL(`/users/${user.slug}`, baseURL).toString(),
         }))

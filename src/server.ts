@@ -30,6 +30,10 @@ app.get('/painel', { preHandler: authMiddleware }, async (request: CRequest, rep
         select:{
             id: true,
             userName: true,
+            email: true,
+            login: true,
+            password: true,
+            createdAt: true,
             slug: true,
         },
         where: {
@@ -45,6 +49,10 @@ app.get('/painel', { preHandler: authMiddleware }, async (request: CRequest, rep
         user: {
             id: user.id,
             userName: user.userName,
+            email: user.email,
+            login: user.login,
+            password: user.password,
+            createdAt: user.createdAt,
             slug: user.slug,
         } 
     })
