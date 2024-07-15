@@ -10,7 +10,8 @@ export async function createUser(app: FastifyInstance) {
             body: z.object({
                 userName: z.string().min(4),
                 login: z.string().min(6),
-                password: z.string().min(6)
+                password: z.string().min(6),
+                email: z.string().email()
             }),
 
             response: {
@@ -23,17 +24,16 @@ export async function createUser(app: FastifyInstance) {
         const {
             userName,
             login,
-            password
+            password,
+            email
         } = request.body
 
         const slug = generateSlug(userName)
-
         const userWithSameSlug = await prisma.user.findUnique({
             where: {
                 slug,
             }
         })
-
         if (userWithSameSlug !== null) {
             throw new Error('Já existe um usuario com o mesmo nome!')
         }
@@ -42,7 +42,8 @@ export async function createUser(app: FastifyInstance) {
             data: {
                 userName,
                 login,
-                password,
+                password, 
+                email,
                 slug
             }
         })

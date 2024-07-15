@@ -2,9 +2,9 @@ POST http://localhost:5555/users
 Content-Type: application/json
 
 {
-    "userName": "Paulo Victor",
-    "login": "pactz707",
-    "password": "123456789"
+    "userName": "user test2",
+    "login": "test708",
+    "password": "teste12345"
 }
 ###
 POST  http://localhost:5555/login HTTP/1.1
