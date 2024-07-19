@@ -8,8 +8,20 @@ import { prisma } from "./lib/prisma";
 import cookie from '@fastify/cookie';
 import { fastify } from "fastify";
 import { authMiddleware, CRequest } from "./authMiddleware/authenticate";
+import WebSocket from "ws";
 
 const app = fastify();
+const wss = new WebSocket.Server({ noServer: true });
+wss.on('connection', (ws) => {
+    ws.on('message', (message) => {
+        wss.clients.forEach(client => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(message);
+            }
+        });
+    });
+});
+
 app.register(cookie, {
     secret: process.env.C_SECRET,
     hook: 'onRequest',
@@ -57,7 +69,13 @@ app.get('/painel', { preHandler: authMiddleware }, async (request: CRequest, rep
         } 
     })
 })
-  
+
+app.server.on('upgrade', (request, socket, head) => {
+    wss.handleUpgrade(request, socket, head, (ws) => {
+        wss.emit('connection', ws, request);
+    });
+});
+
 app.listen({
     host: '0.0.0.0',
     port: process.env.PORT ? Number(process.env.PORT) : 3333,
