@@ -9,8 +9,15 @@ import cookie from '@fastify/cookie';
 import { fastify } from "fastify";
 import { authMiddleware, CRequest } from "./authMiddleware/authenticate";
 import WebSocket from "ws";
+import fastifyCors from '@fastify/cors'
 
 const app = fastify();
+app.register(fastifyCors, {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+});
+
 const wss = new WebSocket.Server({ noServer: true });
 wss.on('connection', (ws) => {
     ws.on('message', (message) => {
