@@ -42,7 +42,17 @@ app.register(getAllUsers)
 app.register(login)
 
 app.get('/painel', { preHandler: authMiddleware }, async (request: CRequest, reply) => {
-    const userId = request.user.userId;
+    const user = await prisma.user.findUnique({
+        where: { id: request.user?.userId }, // Uso seguro do userId
+    });
+
+    if (!user) {
+        return reply.status(404).send({ message: 'User not found' });
+    }
+
+    return reply.status(200).send(user);
+})
+/*     const userId = request.user.userId;
     console.log(userId)
 
     const user = await prisma.user.findUnique({
@@ -74,8 +84,8 @@ app.get('/painel', { preHandler: authMiddleware }, async (request: CRequest, rep
             createdAt: user.createdAt,
             slug: user.slug,
         } 
-    })
-})
+    }) */
+
 
 app.server.on('upgrade', (request, socket, head) => {
     wss.handleUpgrade(request, socket, head, (ws) => {

@@ -16,7 +16,7 @@ export async function login(app: FastifyInstance) {
             response: {
                 200: z.object({
                     message: z.string(),
-                    token: z.string(),
+                    /* token: z.string().optional(), */
                 }),
                 401: z.object({
                     message: z.string(),
@@ -55,7 +55,6 @@ export async function login(app: FastifyInstance) {
         console.log(user, token)
         return reply.status(200).send({
             message: 'Login successful',
-            token,
         });
     });
 }
