@@ -3,7 +3,7 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { prisma } from "../lib/prisma";
-import { sign, verify, JwtPayload } from 'jsonwebtoken';
+import { sign, verify, JwtPayload, Jwt } from 'jsonwebtoken';
 /* import * as bcrypt from 'bcrypt';    */
 
 export async function login(app: FastifyInstance) {
@@ -16,7 +16,7 @@ export async function login(app: FastifyInstance) {
             response: {
                 200: z.object({
                     message: z.string(),
-                    /* token: z.string().optional(), */
+                    token: z.string(),
                 }),
                 401: z.object({
                     message: z.string(),
@@ -49,12 +49,13 @@ export async function login(app: FastifyInstance) {
         reply.setCookie('accessToken', token, {
             path: '/',
             httpOnly: true,
-            signed: true,
+            /* signed: true, */
         });
 
         console.log(user, token)
         return reply.status(200).send({
             message: 'Login successful',
+            token
         });
     });
 }

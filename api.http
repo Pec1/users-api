@@ -2,9 +2,9 @@ POST http://localhost:5555/users
 Content-Type: application/json
 
 {
-    "userName": "user test",
-    "email": "usertest@gmail.com",
-    "login": "test707",
+    "userName": "murilo",
+    "email": "2usertest@gmail.com",
+    "login": "murilo",
     "password": "teste12345"
 }
 ###
@@ -12,14 +12,17 @@ POST  http://localhost:5555/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "login": "pactz707",
-    "password": "123456789"
+    "login": "murilo",
+    "password": "teste12345"
 }       
 ###
 GET  http://localhost:5555/painel HTTP/1.1
 Content-Type: application/json
-Cookie: sessionId=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjNjA0ZTE3MS0wYmU1LTQ3NWItYjFlOS1mZWQxZWQzYjZkZjIiLCJpYXQiOjE3MjA3MjY0OTksImV4cCI6MTcyMDgxMjg5OX0.fYrd-9RzqTE2B1mKmSBFloBh08mIBPIby0Tvr6rNVjY
 
 
 ###
 GET http://localhost:5555/all-users
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YjNlNjBhOC0wMjhjLTQ3NDgtYmUxZC1kOTdmODU0ODU0NmIiLCJpYXQiOjE3MjE2MDMwMDgsImV4cCI6MTcyMTY4OTQwOH0.Joq0d28USEwluvkK23xeuJf3auXOnxG6N9o-I15b-10
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YjNlNjBhOC0wMjhjLTQ3NDgtYmUxZC1kOTdmODU0ODU0NmIiLCJpYXQiOjE3MjE2MDMwMDgsImV4cCI6MTcyMTY4OTQwOH0.Joq0d28USEwluvkK23xeuJf3auXOnxG6N9o-I15b-10.mPbac9glWRI7TNURuDOlQO2p4yhjJQhFzNqHrPoJoo8
